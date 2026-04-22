@@ -1,5 +1,10 @@
 # ccparse
 
+[![npm alpha](https://img.shields.io/npm/v/ccparse-sdk/alpha?label=npm%20alpha)](https://www.npmjs.com/package/ccparse-sdk)
+[![CI](https://github.com/puukis/ccparse/actions/workflows/ci.yml/badge.svg)](https://github.com/puukis/ccparse/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+[![Release status: alpha](https://img.shields.io/badge/status-alpha-orange.svg)](https://www.npmjs.com/package/ccparse-sdk)
+
 ccparse is a production-oriented TypeScript SDK for discovering, parsing, normalizing, and querying Claude Code local session data.
 
 It is not a transcript viewer, a dashboard, or a public CLI product. The goal is narrower and more useful: give developers a stable library for building their own tooling on top of messy real-world Claude Code data under `~/.claude`.
@@ -201,6 +206,11 @@ npm run audit:local-edge-cases
 ## Architecture
 
 Short design notes live in [docs/design.md](./docs/design.md).
+
+Launch drafts:
+
+- [docs/release-0.1.0-alpha.1.md](./docs/release-0.1.0-alpha.1.md)
+- [docs/show-hn.md](./docs/show-hn.md)
 
 ## Contributing
 
