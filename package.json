@@ -1,5 +1,5 @@
 {
-  "name": "ccparse",
+  "name": "ccparse-sdk",
   "version": "0.1.0-alpha.1",
   "description": "Fault-tolerant TypeScript SDK for discovering, parsing, normalizing, and querying Claude Code local session data.",
   "license": "MIT",

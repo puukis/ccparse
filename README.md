@@ -6,6 +6,8 @@ It is not a transcript viewer, a dashboard, or a public CLI product. The goal is
 
 Current release status: alpha. The core parser and normalized model are usable, but externalized tool payloads and nested transcript branches should continue to accumulate field-tested fixtures over time.
 
+The repository is `ccparse`, and the npm package name is `ccparse-sdk`.
+
 ## Why It Exists
 
 Claude Code stores valuable local artifacts, but the raw files are not a stable public API. They can contain partial records, multiline breakage, externalized tool payloads, nested transcript references, and other format drift. ccparse exists to make that data safer to consume without pretending the underlying format is perfectly clean.
@@ -22,7 +24,7 @@ Claude Code stores valuable local artifacts, but the raw files are not a stable 
 ## Install
 
 ```bash
-npm install ccparse@alpha
+npm install ccparse-sdk@alpha
 ```
 
 ## Quick Examples
@@ -30,7 +32,7 @@ npm install ccparse@alpha
 Parse and summarize a session:
 
 ```ts
-import { normalizeSession, parseSession, summarizeSession } from "ccparse";
+import { normalizeSession, parseSession, summarizeSession } from "ccparse-sdk";
 
 const parsed = await parseSession("/Users/alex/.claude/projects/.../session.jsonl");
 const normalized = normalizeSession(parsed);
@@ -41,7 +43,7 @@ console.log(summarizeSession(normalized));
 Discover sessions from the default Claude root:
 
 ```ts
-import { discoverSessions } from "ccparse";
+import { discoverSessions } from "ccparse-sdk";
 
 const sessions = await discoverSessions();
 console.log(sessions.map((session) => session.transcriptPath));
@@ -50,7 +52,7 @@ console.log(sessions.map((session) => session.transcriptPath));
 Hydrate externalized tool results only when needed:
 
 ```ts
-import { normalizeSession, parseSession, resolveToolResults } from "ccparse";
+import { normalizeSession, parseSession, resolveToolResults } from "ccparse-sdk";
 
 const parsed = await parseSession("/Users/alex/.claude/projects/.../session.jsonl");
 const normalized = normalizeSession(parsed);
@@ -101,7 +103,7 @@ import {
   getWarnings,
   normalizeSession,
   parseSession,
-} from "ccparse";
+} from "ccparse-sdk";
 
 const parsed = await parseSession("/Users/alex/.claude/projects/.../session.jsonl");
 const normalized = normalizeSession(parsed);
