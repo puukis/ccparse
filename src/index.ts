@@ -8,6 +8,7 @@ export {
   getDiscoveredSessionState,
   getSubagentRuns,
   getSessionState,
+  getTranscriptState,
   getToolCalls,
   getOpenToolCalls,
   getOrphanToolResults,

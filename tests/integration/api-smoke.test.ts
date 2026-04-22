@@ -5,6 +5,7 @@ import {
   getDiscoveredSessionState,
   getAssistantTurns,
   getSessionState,
+  getTranscriptState,
   iterateEvents,
   normalizeSession,
   parseHistory,
@@ -27,8 +28,9 @@ test("top-level API parses sessions and history end to end", async () => {
   assert.equal([...iterateEvents(normalized)].length, normalized.events.length);
   assert.equal(getAssistantTurns(normalized).length, 2);
   assert.equal(summarizeSession(normalized).sessionId, "session-normal");
-  assert.equal(summarizeSession(normalized).currentState.kind, "waiting_for_user");
-  assert.equal(getSessionState(normalized).kind, "waiting_for_user");
+  assert.equal(summarizeSession(normalized).transcriptState.kind, "waiting_for_user");
+  assert.equal(getTranscriptState(normalized).kind, "waiting_for_user");
+  assert.equal((await getSessionState(normalized)).kind, "waiting_for_user");
   assert.equal(discoveredNormal?.currentState.kind, "waiting_for_user");
   if (discoveredNormal) {
     assert.equal((await getDiscoveredSessionState(discoveredNormal)).kind, "waiting_for_user");

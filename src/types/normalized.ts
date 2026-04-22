@@ -239,7 +239,7 @@ export interface SessionSummary {
   orphanToolResultCount: number;
   warningCount: number;
   warningKinds: ParseWarningCode[];
-  currentState: SessionState;
+  transcriptState: SessionState;
   subagentCount: number;
   startedAt?: string;
   endedAt?: string;

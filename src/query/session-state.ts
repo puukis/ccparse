@@ -1,7 +1,6 @@
+import path from "node:path";
 import { readFile } from "node:fs/promises";
 
-import { normalizeSession } from "../normalize/normalize-session.js";
-import { parseSession } from "../parsing/parse-session.js";
 import type { DiscoveredSession } from "../types/discovery.js";
 import type { ParseWarningCode } from "../types/core.js";
 import type {
@@ -9,6 +8,7 @@ import type {
   NormalizedSession,
   SessionState,
 } from "../types/normalized.js";
+import { readDirectorySafe } from "../utils/fs.js";
 import { getOpenToolCalls } from "./tool-links.js";
 
 interface SessionRuntimeInfo {
@@ -45,7 +45,7 @@ function getRunningReason(lastMeaningfulEvent: NormalizedEvent | undefined): str
   return `The latest meaningful event is ${lastMeaningfulEvent.kind}, which suggests work is still in progress.`;
 }
 
-function getTranscriptState(session: NormalizedSession): SessionState {
+export function getTranscriptState(session: NormalizedSession): SessionState {
   const openToolCalls = getOpenToolCalls(session);
   const warningKinds = getWarningKinds(session);
   const lastMeaningfulEvent = getLastMeaningfulEvent(session);
@@ -169,9 +169,7 @@ export async function loadSessionRuntimeInfo(
   sessionMetadataPath?: string,
 ): Promise<SessionRuntimeInfo | undefined> {
   if (!sessionMetadataPath) {
-    return {
-      hasActiveProcess: false,
-    };
+    return undefined;
   }
 
   try {
@@ -192,6 +190,47 @@ export async function loadSessionRuntimeInfo(
   }
 }
 
+async function findSessionMetadataPath(
+  session: NormalizedSession,
+): Promise<string | undefined> {
+  const sessionId = session.metadata.sessionId;
+  if (!sessionId) {
+    return undefined;
+  }
+
+  let currentPath = path.dirname(session.metadata.sourcePath);
+  while (currentPath !== path.dirname(currentPath)) {
+    if (path.basename(currentPath) === ".claude") {
+      break;
+    }
+    currentPath = path.dirname(currentPath);
+  }
+
+  if (path.basename(currentPath) !== ".claude") {
+    return undefined;
+  }
+
+  const sessionsPath = path.join(currentPath, "sessions");
+  const entries = await readDirectorySafe(sessionsPath);
+  for (const entry of entries) {
+    if (!entry.isFile() || path.extname(entry.name) !== ".json") {
+      continue;
+    }
+
+    const filePath = path.join(sessionsPath, entry.name);
+    try {
+      const raw = JSON.parse(await readFile(filePath, "utf8")) as { sessionId?: unknown };
+      if (raw.sessionId === sessionId) {
+        return filePath;
+      }
+    } catch {
+      continue;
+    }
+  }
+
+  return undefined;
+}
+
 function isProcessAlive(pid: number): boolean {
   try {
     process.kill(pid, 0);
@@ -210,18 +249,20 @@ export function getSessionStateFromNormalized(
   return runtimeInfo === undefined ? transcriptState : withRuntimeInfo(transcriptState, runtimeInfo);
 }
 
-export function getSessionState(session: NormalizedSession): SessionState {
-  return getSessionStateFromNormalized(session);
+export async function getSessionState(
+  session: NormalizedSession | DiscoveredSession,
+): Promise<SessionState> {
+  if ("currentState" in session) {
+    return session.currentState;
+  }
+
+  const sessionMetadataPath = await findSessionMetadataPath(session);
+  const runtimeInfo = await loadSessionRuntimeInfo(sessionMetadataPath);
+  return getSessionStateFromNormalized(session, runtimeInfo);
 }
 
 export async function getDiscoveredSessionState(
   discovered: DiscoveredSession,
 ): Promise<SessionState> {
-  if (discovered.currentState) {
-    return discovered.currentState;
-  }
-
-  const normalized = normalizeSession(await parseSession(discovered.transcriptPath));
-  const runtimeInfo = await loadSessionRuntimeInfo(discovered.sessionMetadataPath);
-  return getSessionStateFromNormalized(normalized, runtimeInfo);
+  return getSessionState(discovered);
 }

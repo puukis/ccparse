@@ -9,6 +9,7 @@ import {
   getOrphanToolResults,
   getSubagentRuns,
   getSessionState,
+  getTranscriptState,
   getToolCalls,
   getWarnings,
   summarizeSession,
@@ -35,8 +36,9 @@ test("query helpers expose assistant turns, tool calls, and summaries", async ()
   assert.equal(summary.assistantReplyCount, 1);
   assert.equal(summary.assistantTextBlockCount, 2);
   assert.deepEqual(summary.warningKinds, []);
-  assert.equal(summary.currentState.kind, "waiting_for_user");
-  assert.equal(getSessionState(normalized).kind, "waiting_for_user");
+  assert.equal(summary.transcriptState.kind, "waiting_for_user");
+  assert.equal(getTranscriptState(normalized).kind, "waiting_for_user");
+  assert.equal((await getSessionState(normalized)).kind, "waiting_for_user");
   assert.deepEqual(getWarnings(normalized), []);
 });
 
