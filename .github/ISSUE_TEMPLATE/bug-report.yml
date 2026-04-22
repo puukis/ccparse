@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a defect in discovery, parsing, normalization, or query behavior.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide minimal reproduction steps or a redacted fixture.
+      placeholder: |
+        1. Call parseSession(...)
+        2. Normalize with ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Warnings / output
+      description: Include warning codes, summaries, or stack traces if relevant.
+
+  - type: input
+    id: node
+    attributes:
+      label: Node version
+      placeholder: "v22.22.0"
+
+  - type: input
+    id: version
+    attributes:
+      label: ccparse version or commit
+      placeholder: "0.1.0 or commit SHA"

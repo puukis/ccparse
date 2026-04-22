@@ -1,0 +1,4 @@
+{"type":"permission-mode","permissionMode":"default","sessionId":"session-malformed"}
+{"parentUuid":null,"isSidechain":false,"promptId":"prompt-malformed","type":"user","message":{"role":"user","content":"This message contains a literal
+newline inside the JSON string."},"uuid":"user-malformed-1","timestamp":"2026-04-20T12:00:00.000Z","sessionId":"session-malformed"}
+{"parentUuid":"user-malformed-1","isSidechain":false,"type":"assistant","uuid":"assistant-malformed-1","timestamp":"2026-04-20T12:00:01.000Z","sessionId":"session-malformed","message":{"id":"msg-malformed-1","type":"message","role":"assistant","model":"claude-sonnet-4-5","content":[{"type":"text","text":"The malformed record was recovered."}],"usage":{"input_tokens":42,"output_tokens":11},"stop_reason":"end_turn"}}

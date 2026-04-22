@@ -1,0 +1,16 @@
+{
+  "entries": [
+    {
+      "level": "info",
+      "message": "Started parser run"
+    },
+    {
+      "level": "warning",
+      "message": "Recovered multiline string"
+    },
+    {
+      "level": "info",
+      "message": "Finished normalization"
+    }
+  ]
+}

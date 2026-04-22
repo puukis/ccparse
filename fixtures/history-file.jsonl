@@ -1,0 +1,3 @@
+{"display":"Explain parser recovery strategy","pastedContents":{},"timestamp":1776777600000,"project":"/tmp/project-a","sessionId":"session-normal"}
+{"display":"[Pasted text #1 +12 lines]","pastedContents":{"1":{"id":1,"type":"text","contentHash":"abc123"}},"timestamp":1776777660000,"project":"/tmp/project-a","sessionId":"session-external"}
+{"display":"Summarize the nested session","pastedContents":{},"timestamp":1776777720000,"project":"/tmp/project-b","sessionId":"session-subagent"}

@@ -1,0 +1,3 @@
+{"type":"permission-mode","permissionMode":"default","sessionId":"subagent-session-1"}
+{"parentUuid":null,"isSidechain":true,"promptId":"prompt-child","type":"user","message":{"role":"user","content":"Inspect parser edge cases."},"uuid":"child-user-1","timestamp":"2026-04-20T15:00:01.500Z","sessionId":"subagent-session-1"}
+{"parentUuid":"child-user-1","isSidechain":true,"type":"assistant","uuid":"child-assistant-1","timestamp":"2026-04-20T15:00:02.500Z","sessionId":"subagent-session-1","message":{"id":"msg-child-1","type":"message","role":"assistant","model":"claude-sonnet-4-5","content":[{"type":"text","text":"The parser should repair literal newlines inside quoted strings."}],"usage":{"input_tokens":40,"output_tokens":14},"stop_reason":"end_turn"}}

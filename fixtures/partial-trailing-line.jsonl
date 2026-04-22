@@ -1,0 +1,3 @@
+{"type":"permission-mode","permissionMode":"default","sessionId":"session-partial"}
+{"parentUuid":null,"isSidechain":false,"promptId":"prompt-partial","type":"user","message":{"role":"user","content":"Start an answer, then stop mid-record."},"uuid":"user-partial-1","timestamp":"2026-04-20T14:00:00.000Z","sessionId":"session-partial"}
+{"parentUuid":"user-partial-1","isSidechain":false,"type":"assistant","uuid":"assistant-partial-1","timestamp":"2026-04-20T14:00:01.000Z","sessionId":"session-partial","message":{"id":"msg-partial-1","type":"message","role":"assistant","model":"claude-sonnet-4-5","content":[{"type":"text","text":"This record is truncated
