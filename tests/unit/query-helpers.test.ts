@@ -4,16 +4,20 @@ import assert from "node:assert/strict";
 import {
   compareSessions,
   getAssistantTurns,
+  getDiscoveredSessionState,
   getOpenToolCalls,
   getOrphanToolResults,
   getSubagentRuns,
+  getSessionState,
+  getTranscriptState,
   getToolCalls,
   getWarnings,
   summarizeSession,
 } from "../../src/index.js";
 import { normalizeSession } from "../../src/normalize/normalize-session.js";
 import { parseSession } from "../../src/parsing/parse-session.js";
-import { fixturePath } from "../helpers/fixtures.js";
+import { createMockClaudeRoot, fixturePath } from "../helpers/fixtures.js";
+import { discoverSessions } from "../../src/discovery/discover-sessions.js";
 
 test("query helpers expose assistant turns, tool calls, and summaries", async () => {
   const normalized = normalizeSession(await parseSession(fixturePath("normal-session.jsonl")));
@@ -32,6 +36,9 @@ test("query helpers expose assistant turns, tool calls, and summaries", async ()
   assert.equal(summary.assistantReplyCount, 1);
   assert.equal(summary.assistantTextBlockCount, 2);
   assert.deepEqual(summary.warningKinds, []);
+  assert.equal(summary.transcriptState.kind, "waiting_for_user");
+  assert.equal(getTranscriptState(normalized).kind, "waiting_for_user");
+  assert.equal((await getSessionState(normalized)).kind, "waiting_for_user");
   assert.deepEqual(getWarnings(normalized), []);
 });
 
@@ -59,4 +66,14 @@ test("summary and warning helper expose concrete warning reasons", async () => {
   assert.equal(openToolCalls.length, 1);
   assert.equal(openToolCalls[0]?.name, "Bash");
   assert.deepEqual(orphanToolResults, []);
+});
+
+test("getDiscoveredSessionState returns the enriched state from discoverSessions", async () => {
+  const claudeRoot = await createMockClaudeRoot();
+  const sessions = await discoverSessions({ roots: [claudeRoot] });
+  const running = sessions.find((session) => session.sessionId === "session-running");
+
+  assert(running);
+  assert.equal(running.currentState.kind, "running");
+  assert.equal((await getDiscoveredSessionState(running)).kind, "running");
 });

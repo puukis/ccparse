@@ -1,3 +1,5 @@
+import type { SessionState } from "./normalized.js";
+
 export interface ClaudeDataRoot {
   rootPath: string;
   projectsPath: string;
@@ -32,6 +34,7 @@ export interface DiscoveredSession {
   totalWarningCount: number;
   hasToolResults: boolean;
   hasSubagents: boolean;
+  currentState: SessionState;
   relatedPaths: {
     toolResultPaths: string[];
     subagentTranscriptPaths: string[];

@@ -5,7 +5,10 @@ export { parseSession } from "./parsing/parse-session.js";
 export {
   getAssistantTurns,
   compareSessions,
+  getDiscoveredSessionState,
   getSubagentRuns,
+  getSessionState,
+  getTranscriptState,
   getToolCalls,
   getOpenToolCalls,
   getOrphanToolResults,

@@ -8,9 +8,11 @@ const sessionFixtures = [
   "normal-session.jsonl",
   "external-tool-results.jsonl",
   "malformed-newlines.jsonl",
+  "metadata-only-session.jsonl",
   "missing-final-stop-event.jsonl",
   "partial-open-tool-call.jsonl",
   "partial-trailing-line.jsonl",
+  "running-session.jsonl",
   "subagent-nested.jsonl",
 ] as const;
 

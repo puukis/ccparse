@@ -1,5 +1,6 @@
 import type { NormalizedSession, SessionSummary } from "../types/normalized.js";
 import { getAssistantTurns } from "./assistant-turns.js";
+import { getTranscriptState } from "./session-state.js";
 import { getSubagentRuns } from "./subagent-runs.js";
 import { getToolCalls } from "./tool-calls.js";
 import { getOpenToolCalls, getOrphanToolResults } from "./tool-links.js";
@@ -14,6 +15,7 @@ export function summarizeSession(session: NormalizedSession): SessionSummary {
   const assistantTextBlockCount = session.events.filter(
     (event) => event.kind === "assistant_text",
   ).length;
+  const transcriptState = getTranscriptState(session);
   const warningKinds = [...new Set(session.warnings.map((warning) => warning.code))];
   const models = [
     ...new Set(
@@ -37,6 +39,7 @@ export function summarizeSession(session: NormalizedSession): SessionSummary {
     orphanToolResultCount: orphanToolResults.length,
     warningCount: session.warnings.length,
     warningKinds,
+    transcriptState,
     subagentCount: subagents.length,
     startedAt: session.metadata.startedAt,
     endedAt: session.metadata.endedAt,

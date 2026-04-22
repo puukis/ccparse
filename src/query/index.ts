@@ -1,6 +1,7 @@
 export * from "./assistant-turns.js";
 export * from "./compare-sessions.js";
 export * from "./iterate-events.js";
+export * from "./session-state.js";
 export * from "./subagent-runs.js";
 export * from "./summarize-session.js";
 export * from "./tool-calls.js";

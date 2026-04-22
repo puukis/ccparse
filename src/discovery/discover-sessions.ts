@@ -5,6 +5,10 @@ import type { DiscoveredSession } from "../types/discovery.js";
 import type { DiscoverSessionsOptions } from "../types/options.js";
 import { normalizeSession } from "../normalize/normalize-session.js";
 import { parseSession } from "../parsing/parse-session.js";
+import {
+  getSessionStateFromNormalized,
+  loadSessionRuntimeInfo,
+} from "../query/session-state.js";
 import { pathExists, readDirectorySafe, statSafe } from "../utils/fs.js";
 import {
   dedupeStrings,
@@ -82,6 +86,11 @@ export async function discoverSessions(
         const totalWarningCount = normalized.warnings.length;
         const stats = await statSafe(transcriptPath);
         const sessionId = parsed.metadata.sessionId ?? path.basename(transcriptEntry.name, ".jsonl");
+        const sessionMetadataPath = metadataIndex.get(sessionId);
+        const currentState = getSessionStateFromNormalized(
+          normalized,
+          await loadSessionRuntimeInfo(sessionMetadataPath),
+        );
         const discovered: DiscoveredSession = {
           sessionId,
           transcriptPath,
@@ -94,6 +103,7 @@ export async function discoverSessions(
           totalWarningCount,
           hasToolResults: normalized.metadata.relatedPaths.toolResultPaths.length > 0,
           hasSubagents: normalized.metadata.relatedPaths.subagentTranscriptPaths.length > 0,
+          currentState,
           relatedPaths: {
             toolResultPaths: normalized.metadata.relatedPaths.toolResultPaths,
             subagentTranscriptPaths: normalized.metadata.relatedPaths.subagentTranscriptPaths,
@@ -106,8 +116,8 @@ export async function discoverSessions(
         if (await pathExists(memoryDir)) {
           discovered.memoryDir = memoryDir;
         }
-        if (metadataIndex.has(sessionId)) {
-          discovered.sessionMetadataPath = metadataIndex.get(sessionId);
+        if (sessionMetadataPath) {
+          discovered.sessionMetadataPath = sessionMetadataPath;
         }
         if (parsed.metadata.startedAt) {
           discovered.startedAt = parsed.metadata.startedAt;

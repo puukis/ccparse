@@ -15,6 +15,7 @@ export async function createMockClaudeRoot(): Promise<string> {
   const projectDir = path.join(claudeRoot, "projects", "-tmp-example-project");
   const memoryDir = path.join(projectDir, "memory");
   const sessionsDir = path.join(claudeRoot, "sessions");
+  const stalePid = process.pid + 1_000_000;
 
   await mkdir(memoryDir, { recursive: true });
   await mkdir(sessionsDir, { recursive: true });
@@ -27,6 +28,14 @@ export async function createMockClaudeRoot(): Promise<string> {
   await cp(
     fixturePath("subagent-nested.jsonl"),
     path.join(projectDir, "session-subagent.jsonl"),
+  );
+  await cp(
+    fixturePath("partial-open-tool-call.jsonl"),
+    path.join(projectDir, "session-open-tool.jsonl"),
+  );
+  await cp(
+    fixturePath("running-session.jsonl"),
+    path.join(projectDir, "session-running.jsonl"),
   );
   await mkdir(path.join(projectDir, "tool-results"), { recursive: true });
   await mkdir(path.join(projectDir, "subagents"), { recursive: true });
@@ -42,17 +51,27 @@ export async function createMockClaudeRoot(): Promise<string> {
   await cp(fixturePath("history-file.jsonl"), path.join(claudeRoot, "history.jsonl"));
   await writeFile(
     path.join(sessionsDir, "1001.json"),
-    JSON.stringify({ sessionId: "session-normal", pid: 1001 }, null, 2),
+    JSON.stringify({ sessionId: "session-normal", pid: process.pid }, null, 2),
     "utf8",
   );
   await writeFile(
     path.join(sessionsDir, "1002.json"),
-    JSON.stringify({ sessionId: "session-external", pid: 1002 }, null, 2),
+    JSON.stringify({ sessionId: "session-external", pid: stalePid }, null, 2),
     "utf8",
   );
   await writeFile(
     path.join(sessionsDir, "1003.json"),
-    JSON.stringify({ sessionId: "session-subagent", pid: 1003 }, null, 2),
+    JSON.stringify({ sessionId: "session-subagent", pid: stalePid + 1 }, null, 2),
+    "utf8",
+  );
+  await writeFile(
+    path.join(sessionsDir, "1004.json"),
+    JSON.stringify({ sessionId: "session-open-tool", pid: process.pid }, null, 2),
+    "utf8",
+  );
+  await writeFile(
+    path.join(sessionsDir, "1005.json"),
+    JSON.stringify({ sessionId: "session-running", pid: process.pid }, null, 2),
     "utf8",
   );
 
