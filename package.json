@@ -57,5 +57,8 @@
     "@types/node": "^22.15.21",
     "tsx": "^4.19.2",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "ccparse-sdk": "^0.1.0-alpha.1"
   }
 }
