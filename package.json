@@ -3,6 +3,14 @@
   "version": "0.1.0-alpha.1",
   "description": "Fault-tolerant TypeScript SDK for discovering, parsing, normalizing, and querying Claude Code local session data.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puukis/ccparse.git"
+  },
+  "homepage": "https://github.com/puukis/ccparse#readme",
+  "bugs": {
+    "url": "https://github.com/puukis/ccparse/issues"
+  },
   "packageManager": "npm@11.12.1",
   "type": "module",
   "sideEffects": false,
