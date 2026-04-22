@@ -199,6 +199,23 @@ export interface SubagentRun {
   occurrences: SubagentRunEvent[];
 }
 
+export type SessionStateKind =
+  | "waiting_for_user"
+  | "waiting_for_tool_result"
+  | "running"
+  | "completed"
+  | "incomplete"
+  | "unknown";
+
+export interface SessionState {
+  kind: SessionStateKind;
+  reason: string;
+  warningKinds: ParseWarningCode[];
+  openToolCallCount: number;
+  lastMeaningfulEventKind?: NormalizedEventKind;
+  hasActiveProcess?: boolean;
+}
+
 export interface SessionSummary {
   sessionId?: string;
   eventCount: number;
@@ -222,6 +239,7 @@ export interface SessionSummary {
   orphanToolResultCount: number;
   warningCount: number;
   warningKinds: ParseWarningCode[];
+  currentState: SessionState;
   subagentCount: number;
   startedAt?: string;
   endedAt?: string;

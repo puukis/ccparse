@@ -75,6 +75,8 @@ ccparse intentionally keeps the top-level surface compact:
 - `resolveToolResults(session, options)`
 - `iterateEvents(session)`
 - `getAssistantTurns(session)`
+- `getSessionState(session)`
+- `getDiscoveredSessionState(session)`
 - `getToolCalls(session)`
 - `getOpenToolCalls(session)`
 - `getOrphanToolResults(session)`
@@ -88,8 +90,27 @@ ccparse intentionally keeps the top-level surface compact:
 Three places where ccparse is intentionally explicit:
 
 - Discovery warning counts are split into `parserWarningCount`, `normalizationWarningCount`, and `totalWarningCount`.
+- Session state is exposed as a first-class `currentState` object in discovery and summaries.
 - Session summaries distinguish `assistantRecordCount` from `assistantReplyCount`.
 - Warning reasons are exposed as `warningKinds`, and you can read the full warnings via `getWarnings(session)`.
+
+## Session State
+
+ccparse now exposes explicit session-state helpers for common “what is Claude Code doing right now?” use cases:
+
+- `getSessionState(normalizedSession)` derives state from the transcript alone
+- `getDiscoveredSessionState(discoveredSession)` enriches that with local Claude session metadata when available
+- `discoverSessions()` includes `currentState`
+- `summarizeSession()` includes `currentState`
+
+The first release uses a focused state model:
+
+- `waiting_for_user`
+- `waiting_for_tool_result`
+- `running`
+- `completed`
+- `incomplete`
+- `unknown`
 
 `assistantRecordCount` is the count of assistant-origin normalized records represented by `getAssistantTurns()`, including thinking-only and tool-use-only assistant records. It is not limited to human-visible replies. `assistantReplyCount` is narrower: it counts only assistant turns that contain visible text. `assistantTextBlockCount` counts individual normalized text blocks.
 
