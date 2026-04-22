@@ -9,7 +9,7 @@
     <a href="https://github.com/puukis/ccparse/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/puukis/ccparse/actions/workflows/ci.yml/badge.svg" /></a>
     <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green.svg" /></a>
     <a href="https://www.npmjs.com/package/ccparse-sdk"><img alt="Release status: alpha" src="https://img.shields.io/badge/status-alpha-orange.svg" /></a>
-    <img alt="Node >=20.10" src="https://img.shields.io/badge/node-%3E%3D20.10-3C873A" />
+    <img alt="Node 20.10+" src="https://img.shields.io/badge/node-20.10%2B-3C873A" />
   </p>
   <p>
     <code>repo: ccparse</code>
