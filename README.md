@@ -1,9 +1,23 @@
-# ccparse
+<div align="center">
+  <h1>ccparse</h1>
+  <p>
+    <strong>Fault-tolerant parsing for Claude Code local session data.</strong><br />
+    Discover sessions, recover messy JSONL, normalize raw records into typed events, and query them without trusting the raw format.
+  </p>
+  <p>
+    <a href="https://www.npmjs.com/package/ccparse-sdk"><img alt="npm alpha" src="https://img.shields.io/npm/v/ccparse-sdk/alpha?label=npm%20alpha" /></a>
+    <a href="https://github.com/puukis/ccparse/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/puukis/ccparse/actions/workflows/ci.yml/badge.svg" /></a>
+    <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green.svg" /></a>
+    <a href="https://www.npmjs.com/package/ccparse-sdk"><img alt="Release status: alpha" src="https://img.shields.io/badge/status-alpha-orange.svg" /></a>
+    <img alt="Node 20.10+" src="https://img.shields.io/badge/node-20.10%2B-3C873A" />
+  </p>
+  <p>
+    <code>repo: ccparse</code>
+    <code>npm: ccparse-sdk</code>
+  </p>
+</div>
 
-[![npm alpha](https://img.shields.io/npm/v/ccparse-sdk/alpha?label=npm%20alpha)](https://www.npmjs.com/package/ccparse-sdk)
-[![CI](https://github.com/puukis/ccparse/actions/workflows/ci.yml/badge.svg)](https://github.com/puukis/ccparse/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![Release status: alpha](https://img.shields.io/badge/status-alpha-orange.svg)](https://www.npmjs.com/package/ccparse-sdk)
+---
 
 ccparse is a production-oriented TypeScript SDK for discovering, parsing, normalizing, and querying Claude Code local session data.
 
